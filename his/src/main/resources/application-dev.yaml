@@ -1,0 +1,42 @@
+pulsar:
+  url: localhost:6650
+spring:
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: ADMIN
+  data:
+    redis:
+      host: localhost
+      port: 4379
+      database: 1
+      connect-timeout: 5s
+      timeout: 5s
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/his_test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.hmc.his.model
+server:
+  port: 8001
+management:
+  server:
+    port: 9001
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+    env:
+      show-values: always
+    logfile:
+      enabled: true

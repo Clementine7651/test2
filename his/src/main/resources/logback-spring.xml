@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
+                %msg%n</pattern>
+        </encoder>
+    </appender>
+    <property name="APP_NAME" value="his"/>
+    <contextName>${APP_NAME}</contextName>
+    <appender name="LOGSTASH"
+              class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>127.0.0.1:5044</destination>
+        <encoder charset="UTF-8"
+                 class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"appname":"${APP_NAME}"}</customFields>
+        </encoder>
+    </appender>
+    <springProfile name="dev">
+        <root level="info">
+            <appender-ref ref="STDOUT" />
+        </root>
+    </springProfile>
+    <springProfile name="prod">
+        <root level="error">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="LOGSTASH" />
+        </root>
+    </springProfile>
+</configuration>
